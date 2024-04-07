@@ -18,7 +18,7 @@ const Banner = () => {
   return (
     <div
       style={{
-        backgroundImage: "url(" + `${firstImgpath}` + ")",
+        backgroundImage: `url(${firstImgpath})`,
       }}
       className="banner"
     >

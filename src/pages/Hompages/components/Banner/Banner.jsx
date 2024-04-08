@@ -5,7 +5,7 @@ import Alert from "react-bootstrap/Alert";
 
 const Banner = () => {
   const { data, isLoading, isError, error } = usePopulerMoviceQuery();
-  console.log(data, "111");
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }

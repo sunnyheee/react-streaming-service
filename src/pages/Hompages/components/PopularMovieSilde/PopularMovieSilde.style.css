@@ -1,0 +1,9 @@
+.carousel-container {
+  overflow: hidden;
+}
+.carousel-container ul {
+  gap: 20px;
+}
+.popular-box {
+  margin: 60px 0;
+}

@@ -1,7 +1,7 @@
 import React from "react";
-import { Alert } from "bootstrap";
 import MovieSilde from "../../../../common/MovieSilde/MovieSilde";
-import { usePopulerMoviceQuery } from "../../../../hooks/usePopulerMovice";
+import { useTopRatedMoviesQuery } from "../../../../hooks/usePopulerMovice";
+import { Alert } from "bootstrap";
 
 const responsive = {
   desktop: {
@@ -18,18 +18,20 @@ const responsive = {
   },
 };
 
-const PopularMovieSilde = () => {
-  const { data, isLoading, isError, error } = usePopulerMoviceQuery();
+const TopRatedMovieSlide = () => {
+  const { data, isLoading, isError, error } = useTopRatedMoviesQuery();
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
   if (isError) {
     return <Alert variant="danger">{error.message}</Alert>;
   }
+
   return (
     <div>
       <MovieSilde
-        title="Popular Movies"
+        title="Top Rated Movie"
         movies={data.results}
         responsive={responsive}
       />
@@ -37,4 +39,4 @@ const PopularMovieSilde = () => {
   );
 };
 
-export default PopularMovieSilde;
+export default TopRatedMovieSlide;

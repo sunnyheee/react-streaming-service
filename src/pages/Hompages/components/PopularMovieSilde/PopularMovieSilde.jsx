@@ -4,15 +4,16 @@ import { Alert } from "bootstrap";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import MovieCard from "../MovieCard/MovieCard";
+import "./PopularMovieSilde.style.css";
 
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
+    items: 4,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 8,
+    items: 2,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
@@ -30,7 +31,7 @@ const PopularMovieSilde = () => {
   }
 
   return (
-    <div>
+    <div className="popular-box">
       <h3>Popular Movies</h3>
       <Carousel
         infinite={true}

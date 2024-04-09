@@ -1,5 +1,6 @@
 .carousel-container {
   overflow: hidden;
+  padding: 40px 0;
 }
 .carousel-container ul {
   gap: 20px;

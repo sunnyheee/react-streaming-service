@@ -5,7 +5,6 @@ import Carousel from "react-multi-carousel";
 import MovieCard from "../MovieCard/MovieCard";
 
 const MovieSilde = ({ title, movies, responsive }) => {
-  console.log(title, movies, responsive);
   return (
     <div className="popular-box">
       <h3>{title}</h3>

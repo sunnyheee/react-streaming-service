@@ -37,3 +37,8 @@
 .category-item {
   margin: 0;
 }
+@media screen and (max-width: 640px) {
+  .overlay {
+    opacity: 1;
+  }
+}

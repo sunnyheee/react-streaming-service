@@ -1,0 +1,17 @@
+.sidebar-area {
+  border: 1px solid;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.side-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.3rem;
+  cursor: pointer;
+}
+.side-title > h5 {
+  margin: 0;
+}

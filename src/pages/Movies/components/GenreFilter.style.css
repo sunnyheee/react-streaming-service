@@ -1,0 +1,16 @@
+.genre-filter-area {
+  text-align: center;
+  border-top: 1px solid;
+  padding: 2rem 0;
+}
+.genre-filter-button {
+  margin: 0;
+  padding: 15px 20px;
+  font-size: 1rem;
+  border-radius: 15px;
+  width: 100%;
+  cursor: pointer;
+}
+.genre-filter-button.active {
+  outline: 5px solid white;
+}

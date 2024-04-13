@@ -1,0 +1,6 @@
+.filter-style.close {
+  display: none;
+}
+.filter-style.open {
+  display: block;
+}

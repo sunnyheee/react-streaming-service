@@ -1,0 +1,13 @@
+.page-item.selected a {
+  background-color: #e50914;
+  color: #fff;
+}
+.page-link {
+  color: #333;
+}
+.movie-card {
+  margin-bottom: 20px;
+}
+.pagination {
+  justify-content: center;
+}

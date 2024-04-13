@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./PageNavbar.style.css";
 
-const PageNavbar = () => {
+const PageNavbar = ({ keyword, setKeyword, searchByKeyword }) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -26,14 +26,19 @@ const PageNavbar = () => {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/movies">Movies</Nav.Link>
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={searchByKeyword}>
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={(e) => setKeyword(e.target.value)}
             />
-            <Button className="search-btn" variant="outline-success">
+            <Button
+              className="search-btn"
+              variant="outline-success"
+              type="submit"
+            >
               Search
             </Button>
           </Form>

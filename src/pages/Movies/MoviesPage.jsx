@@ -11,7 +11,7 @@ const MoviesPage = () => {
   const [query] = useSearchParams();
   const [page, setPage] = useState(1);
   const [sortValue, setSortValue] = useState("");
-  const [data, setData] = useState(null);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [genreId, setGenreId] = useState([]);
   const keyword = query.get("q");
 
@@ -27,67 +27,36 @@ const MoviesPage = () => {
 
   const handlePageClick = ({ selected }) => {
     setPage(selected + 1);
-    setSortValue("");
-    setGenreId([]);
   };
 
-  const sortMovie = () => {
-    let sortedData;
-    switch (sortValue) {
-      case "Popularity(Asc)":
-        sortedData = [...data.results].sort(
-          (a, b) => a.popularity - b.popularity
-        );
-        setData({ ...data, results: sortedData });
-        return;
-      case "Release Day(Desc)":
-        sortedData = [...data.results].sort(
-          (a, b) =>
-            Number(b.release_date.split("-").join("")) -
-            Number(a.release_date.split("-").join(""))
-        );
-        setData({ ...data, results: sortedData });
-        return;
-      case "Release Day(Asc)":
-        sortedData = [...data.results].sort(
-          (a, b) =>
-            Number(a.release_date.split("-").join("")) -
-            Number(b.release_date.split("-").join(""))
-        );
-        setData({ ...data, results: sortedData });
-        return;
-      case "Vote(Desc)":
-        sortedData = [...data.results].sort(
-          (a, b) => b.vote_average - a.vote_average
-        );
-        setData({ ...data, results: sortedData });
-        return;
-      case "Vote(Asc)":
-        sortedData = [...data.results].sort(
-          (a, b) => a.vote_average - b.vote_average
-        );
-        setData({ ...data, results: sortedData });
-        return;
-      default:
-        sortedData = [...data.results].sort(
-          (a, b) => b.popularity - a.popularity
-        );
-        setData({ ...data, results: sortedData });
-        return;
-    }
+  const sortMovies = (movies) => {
+    const sortMap = {
+      "Popularity(Asc)": (a, b) => a.popularity - b.popularity,
+      "Release Day(Desc)": (a, b) => Number(b.release_date.replace(/-/g, "")) - Number(a.release_date.replace(/-/g, "")),
+      "Release Day(Asc)": (a, b) => Number(a.release_date.replace(/-/g, "")) - Number(b.release_date.replace(/-/g, "")),
+      "Vote(Desc)": (a, b) => b.vote_average - a.vote_average,
+      "Vote(Asc)": (a, b) => a.vote_average - b.vote_average,
+      "": (a, b) => b.popularity - a.popularity, // Default sorting by popularity
+    };
+
+    const sortFunction = sortMap[sortValue] || sortMap[""];
+    return [...movies].sort(sortFunction);
   };
 
   useEffect(() => {
-    if (sortValue !== "") {
-      sortMovie();
-    } else if (movieList) {
-      setData(movieList);
+    if (movieList) {
+      // 필터링 및 정렬 처리
+      let filtered = movieList.results.filter((item) =>
+        genreId.every((i) => item.genre_ids.includes(i))
+      );
+      setFilteredMovies(sortMovies(filtered));
     }
-  }, [sortValue, movieList]);
+  }, [sortValue, movieList, genreId]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+
   if (isError) {
     return <Alert variant="danger">{error.message}</Alert>;
   }
@@ -105,22 +74,18 @@ const MoviesPage = () => {
         </Col>
         <Col lg={8} xs={12}>
           <Row>
-            {data?.results
-              .filter((item) =>
-                genreId.every((i) => item.genre_ids.includes(i))
-              )
-              .map((movie, index) => (
-                <Col key={index} lg={6} xs={12}>
-                  <MovieCard movie={movie} />
-                </Col>
-              ))}
+            {filteredMovies.map((movie, index) => (
+              <Col key={index} lg={6} xs={12}>
+                <MovieCard movie={movie} />
+              </Col>
+            ))}
           </Row>
           <ReactPaginate
             nextLabel=">"
             onPageChange={handlePageClick}
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
-            pageCount={data?.total_pages > 500 ? 500 : data?.total_pages}
+            pageCount={Math.min(movieList.total_pages, 500)}
             previousLabel="<"
             pageClassName="page-item"
             pageLinkClassName="page-link"

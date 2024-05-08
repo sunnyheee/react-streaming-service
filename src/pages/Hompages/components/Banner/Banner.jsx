@@ -12,14 +12,13 @@ const Banner = () => {
   if (isError) {
     return <Alert variant="danger">{error.message}</Alert>;
   }
-  const firstMovie = data?.results ? data.results[0] : null;
-  const firstImgPath = firstMovie?.poster_path
-    ? `https://www.themoviedb.org/t/p/w1066_and_h600_bestv2${firstMovie.poster_path}`
-    : "";
+  let firstImgpathData = data?.results[0].poster_path;
+  let firstImgpath = `https://www.themoviedb.org/t/p/w1066_and_h600_bestv2${firstImgpathData}`;
+
   return (
     <div
       style={{
-        backgroundImage: `url(${firstImgPath})`,
+        backgroundImage: `url(${firstImgpath})`,
       }}
       className="banner"
     >

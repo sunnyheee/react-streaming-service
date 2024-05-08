@@ -8,24 +8,21 @@ const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
   const { data: genreData } = useMovieGenreQuery();
 
-  const showGenre = (genreIdList) => {
+  const getGenreNames = (genreIdList) => {
     if (!genreData) return [];
-    const gerneNameList = genreIdList.map((id) => {
-      const genreObj = genreData.find((genre) => genre.id === id);
-      return genreObj.name;
-    });
-
-    return gerneNameList;
+    return genreIdList
+      .map((id) => {
+        const genreObj = genreData.find((genre) => genre.id === id);
+        return genreObj ? genreObj.name : "Unknown";
+      });
   };
+
+  const backgroundImageUrl = `https://media.themoviedb.org/t/p/w600_and_h900_bestv2${movie.backdrop_path}`;
+
 
   return (
     <div
-      style={{
-        backgroundImage:
-          "url(" +
-          `https://media.themoviedb.org/t/p/w600_and_h900_bestv2${movie.backdrop_path}` +
-          ")",
-      }}
+      style={{ backgroundImage: `url(${backgroundImageUrl})` }}
       className="movie-card"
       onClick={() => navigate(`/movies/${movie.id}`)}
     >
@@ -33,7 +30,7 @@ const MovieCard = ({ movie }) => {
         <h1>{movie.title}</h1>
 
         <ul className="category-box">
-          {showGenre(movie.genre_ids).map((id, i) => (
+          {getGenreNames(movie.genre_ids).map((id, i) => (
             <li key={i}>
               <Badge bg="danger" className="category-item">
                 {id}

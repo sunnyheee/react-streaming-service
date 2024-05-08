@@ -5,21 +5,16 @@ import "./GenreFilter.style.css";
 
 const GenreFilter = ({ genreId, setGenreId }) => {
   const { data: genreData } = useMovieGenreQuery();
-
-  // Check if a genre is currently active
-  const isActiveGenre = (id) => genreId.includes(id);
-
-  // Toggle genre selection
-  const toggleGenreSelection = (id) => {
-    if (isActiveGenre(id)) {
-      // Remove the genre if already selected
-      setGenreId(genreId.filter((genre) => genre !== id));
+  const selectedGenres = (event, id) => {
+    if (event.target.classList.contains("active")) {
+      event.target.classList.remove("active");
+      const list = genreId.filter((i) => i !== id);
+      setGenreId(list);
     } else {
-      // Add the genre if not already selected
+      event.target.classList.add("active");
       setGenreId([...genreId, id]);
     }
   };
-  
   return (
     <div className="genre-filter-area">
       <h6>Genres</h6>
@@ -29,7 +24,7 @@ const GenreFilter = ({ genreId, setGenreId }) => {
             <Badge
               bg="primary"
               className="genre-filter-button"
-              onClick={(event) => toggleGenreSelection(event, item.id)}
+              onClick={(event) => selectedGenres(event, item.id)}
             >
               {item.name}
             </Badge>

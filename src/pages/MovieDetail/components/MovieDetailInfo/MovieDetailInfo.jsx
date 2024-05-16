@@ -8,7 +8,7 @@ const MovieDetailInfo = ({ movie, id }) => {
   const [show, setShow] = useState(false);
   const { data: video } = useMovieTrailerQuery({ id });
   const prices = (price) => {
-    price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   const opts = {
     height: "100%",
